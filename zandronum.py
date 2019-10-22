@@ -30,6 +30,7 @@ class Zandronum:
             return
 
         self.echo("Starting Zandronum...")
+
         # Start processing paramaters
         args = [self.directory + "zandronum-server"]
 
@@ -49,6 +50,7 @@ class Zandronum:
         self.process = Popen(args, bufsize=1, shell=False, universal_newlines=True, stdout=PIPE, stderr=PIPE, stdin=PIPE)
 
         # Start threads and queues to monitor output from the process
+        # Yes, it's ugly.
         self.stdout_t = Thread(target=queue_output, args=(self.process.stdout, self.stdout))
         self.stderr_t = Thread(target=queue_output, args=(self.process.stderr, self.stderr))
 
@@ -57,16 +59,23 @@ class Zandronum:
 
         self.stdout_t.start()
         self.stderr_t.start()
+
+    # Checks if the process is active
     def isRunning(self):
         if self.process:
             return True
         else:
             return False
+
+    # If the server is running OR we still have output to dump,
+    # Zandronum needs to still be treated as active
     def isReady(self):
         if self.isRunning() or not self.stdout.empty() or not self.stderr.empty():
             return True
         else:
             return False
+
+    # Dump the queues
     def getOutput(self):
         sout = []
         serr = []
@@ -78,10 +87,14 @@ class Zandronum:
             serr.append(str(self.stderr.get_nowait()))
 
         return (sout, serr)
+
+    # Send a string to the server process
     def send(self, message):
         if self.process:
             self.echo("Sending: " + message)
             self.process.stdin.write(message + '\n')
+
+    # Shut down the process and close threads
     def shutDown(self):
         if self.process:
             if self.process.returncode != None:
@@ -97,9 +110,14 @@ class Zandronum:
             self.echo("Stopped successfully.")
         else:
             self.echo("Zandronum is already stopped.")
+
+    # Add a wad
+    # duh
     def addWad(self, wad):
         if wad not in self.wads:
             self.wads.append(wad)
+
+    # Print a colored output message
     def echo(self, message):
         self.stdout.put_nowait(message + '\n')
         print("\033[94m {}\033[00m" .format(message))

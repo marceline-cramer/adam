@@ -1,22 +1,29 @@
 #!/usr/bin/python3
 
-import discord_bot
-import zandronum
-import argparse
+def main():
+    import discord_bot
+    import zandronum
+    import argparse
 
-parser = argparse.ArgumentParser()
-parser.add_argument("-c", "--channel", help="Discord channel ID for the bot", required=True, type=int)
-parser.add_argument("-m", "--modrole", help="Discord moderator role ID; allows admin privileges for Zandronum", required=True, type=int)
-parser.add_argument("-t", "--token", help="Discord bot token", required=True)
-parser.add_argument("-w", "--wads", help="WADs to load by default", nargs='+')
-args = parser.parse_args()
+    # Handle parameters
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-c", "--channel", metavar="channelID", help="Discord channel ID for the bot", required=True, type=int)
+    parser.add_argument("-m", "--modrole", metavar="modroleID", help="Discord moderator role ID; allows admin privileges for Zandronum", required=True, type=int)
+    parser.add_argument("-t", "--token", metavar="bottoken", help="Discord bot token", required=True)
+    parser.add_argument("-w", "--wads", metavar="wads", help="WADs to load by default", nargs='+')
+    args = parser.parse_args()
 
-print(type(args), args, str(args))
+    # Start the server and add WADs from arguments
+    zandro = zandronum.Zandronum()
+    for wad in args.wads:
+        zandro.addWad(wad)
 
-zandro = zandronum.Zandronum()
-for wad in args.wads:
-    zandro.addWad(wad)
+    # Create a client and initialize from Zandro
+    client = discord_bot.AdamBot()
+    client.run(zandro, args.channel, args.modrole, args.token)
 
-client = discord_bot.AdamBot()
-client.run(zandro, args.channel, args.modrole, args.token)
-zandro.shutDown()
+    # Shut down after the client closes
+    zandro.shutDown()
+
+if __name__ == "__main__":
+    main()

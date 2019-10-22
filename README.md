@@ -25,6 +25,6 @@ Zandronum and all of its files (including optional WADs) must be in a subfolder 
 
 ## To-do
 - Add `.conf` files
-- Comment and format existing code
 - Fix message length limit formatting
 - Fix code injection vulnerability allowing non-Admins to run server commands from Discord
+- Add support for IWADs other than freedoom2

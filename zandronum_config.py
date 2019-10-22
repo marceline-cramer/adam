@@ -23,6 +23,8 @@ class ZandronumConfiguration:
         self.mode = gameModes[0]
         self.lastConfig = "default"
         self.dirty = False
+
+    # Changes settings
     def configure(self, args):
         self.echo(str(args))
         var = args[0].lower()
@@ -47,6 +49,8 @@ class ZandronumConfiguration:
            self.settings[var] = params[0]
 
         self.dirty = True
+
+    # Saves a .conf file (WIP)
     def save(self, configFile):
         configPath = self.load(configFile, directoryOnly=True)
         self.echo("Saving to `"+configPath + "`")
@@ -64,6 +68,8 @@ class ZandronumConfiguration:
         self.dirty = False
 
         return configPath
+
+    # Loads a .conf file (WIP)
     def load(self, configFile=None, directoryOnly=False):
         configPath = self.lastConfig
 
@@ -84,6 +90,9 @@ class ZandronumConfiguration:
         self.echo("Loaded from `" + configPath + "`")
 
         return configPath
+
+    # Currently displays the settings
+    # Will be changed to list available .confs
     def list(self, args):
         outMessage = ""
         outMessage += "Map configurations:\n```"
@@ -94,6 +103,8 @@ class ZandronumConfiguration:
             outMessage += map + "\n"
         outMessage += "```\nGame mode: `"+self.mode+"`\n"
         self.echo(outMessage)
+
+    # Echo a colored message
     def echo(self, message):
         if self.parentEcho:
             self.parentEcho(message)
