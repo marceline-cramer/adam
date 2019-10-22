@@ -5,6 +5,16 @@ Adam was originally named after Commander Adam Malkovich from the Metroid series
 
 If you'd like to contact me about the bot, send me a friend request `@straw_man (CrazyWazy)#5915`, or join the Metroid Dreadnought server (https://discord.gg/KHaGJe3), where I'm active.
 
+## Features
+
+The program works by piping input and output from the Zandronum server process to and from a Discord bot. All messages from Zandronum are then sent to a specified Discord channel. Discord members can then, in the same channel, send messages to Zandronum.
+
+Messages starting with `.` will be echoed in Zandronum as server messages. If a member with nickname `"S H O D A N"` types `.the quick brown fox`, then there will be a message in-game: `<server>: S H O D A N: the quick brown fox`
+
+Messages starting with `?` are processed as Zandronum server commands. To use commands, the member using them must have the Zandronum Admin role, specified with an ID from the command line. A Zandro Admin typing `?changemap metdm02` will send the command `changemap metdm02` to Zandronum.
+
+The feature to add configuration files and modify them from Discord is a WIP.
+
 ## To Run
 
 To run Adam, execute `main.py` with the following parameters:
@@ -28,3 +38,4 @@ Zandronum and all of its files (including optional WADs) must be in a subfolder 
 - Fix message length limit formatting
 - Fix code injection vulnerability allowing non-Admins to run server commands from Discord
 - Add support for IWADs other than freedoom2
+- Option to change command prefixes?
