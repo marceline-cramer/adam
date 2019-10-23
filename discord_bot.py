@@ -7,10 +7,10 @@ MAXMESSAGELENGTH = 1500
 
 class AdamBot(discord.Client):
     # Initialization
-    def run(self, zandronum, channelid, modid, token):
+    def run(self, zandronum, channel, modrole, token):
         self.zandronum = zandronum
-        self.channelid = channelid
-        self.modid = modid
+        self.channelid = channel
+        self.modid = modrole
 
         # Process Zandronum output in our event loop
         self.loop.create_task(self.zandronumHandler())
