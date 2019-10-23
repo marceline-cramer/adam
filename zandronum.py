@@ -15,14 +15,56 @@ def queue_output(out, queue):
     out.close()
 
 class Zandronum:
-    def __init__(self):
+    def __init__(self, directory=None, iwad=None):
         # Default values
         self.wads = []
-        self.iwad = "freedoom2.wad"
         self.process = None
-        self.directory = './zandronum/'
+
+        # Set the directory
+        if not directory:
+            self.echo("Zandronum directory defaulting to ./zandronum/")
+            self.directory = './zandronum/'
+        else:
+            if os.path.exists(directory):
+                self.directory = directory
+                self.echo("Using "+directory+" as Zandronum directory")
+            else:
+                self.echo("Invalid directory "+directory+". Defaulting to ./zandronum/")
+                self.directory = './zandronum/'
+
+        # Locate the server binary
+        linuxBinary = os.path.join(self.directory, "zandronum-server")
+        windowsBinary = os.path.join(self.directory, "zandronum-server.exe")
+        if os.path.exists(linuxBinary):
+            self.executablePath = linuxBinary
+        elif os.path.exists(windowsBinary):
+            self.executablePath = windowsBinary
+        else:
+            self.echo("Zandronum server binary not found.")
+            raise RuntimeError("Zandronum server binary not found.")
+        self.echo("Using server executable "+self.executablePath)
+
+        # Set the IWAD
+        if not iwad:
+            self.echo("Defaulting to IWAD freedoom2")
+            iwadPath = os.path.join(self.directory, "freedoom2.wad")
+            if os.path.exists(iwadPath):
+                self.iwad = "freedoom2.wad"
+            else:
+                self.echo(iwadPath+" was not found. Aborting.")
+                raise RuntimeError("Missing IWAD freedoom2.wad")
+        else:
+            iwadPath = os.path.join(self.directory, iwad)
+            if os.path.exists(iwadPath):
+                self.iwad = iwadPath
+                self.echo("Using "+iwadPath+" as IWAD")
+            else:
+                self.echo("IWAD "+iwadPath+" does not exist. Aborting.")
+                raise RuntimeError("Missing IWAD")
+
         self.stdout = Queue()
         self.stderr = Queue()
+
         self.config = zandronum_config.ZandronumConfiguration(self.directory, self.echo)
     def start(self):
         if self.process:
@@ -31,14 +73,14 @@ class Zandronum:
 
         self.echo("Starting Zandronum...")
 
-        # Start processing paramaters
-        args = [self.directory + "zandronum-server"]
+        # Start processing parameters
+        args = [self.executablePath]
 
         args.append("-exec")
         args.append(self.config.load())
 
         args.append("-iwad")
-        args.append(self.directory + self.iwad)
+        args.append(self.iwad)
 
         # WADS/PK3s/etc.
         for wad in self.wads:
@@ -119,5 +161,6 @@ class Zandronum:
 
     # Print a colored output message
     def echo(self, message):
-        self.stdout.put_nowait(message + '\n')
+        if self.isRunning():
+            self.stdout.put_nowait(message + '\n')
         print("\033[94m {}\033[00m" .format(message))
