@@ -39,3 +39,4 @@ Zandronum and all of its files (including optional WADs) must be in a subfolder 
 - Fix code injection vulnerability allowing non-Admins to run server commands from Discord
 - Add support for IWADs other than freedoom2
 - Option to change command prefixes?
+- Option to change zandronum directory and executable (`zandronum` vs `zandronum.exe`)
