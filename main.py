@@ -13,10 +13,11 @@ def main():
     parser.add_argument("-w", "--wads", metavar="wads", help="WADs to load by default", nargs='+')
     parser.add_argument("-d", "--directory", metavar="directory", help="Path to directory containing Zandronum and its files")
     parser.add_argument("-i", "--iwad", metavar="iwad", help="IWAD to load")
+    parser.add_argument("-p", "--port", metavar="port", help="Zandronum server port", type=int)
     args = parser.parse_args()
 
     # Start the server and add WADs from arguments
-    zandro = zandronum.Zandronum(directory=args.directory, iwad=args.iwad)
+    zandro = zandronum.Zandronum(directory=args.directory, iwad=args.iwad, port=args.port)
     for wad in args.wads:
         zandro.addWad(wad)
 

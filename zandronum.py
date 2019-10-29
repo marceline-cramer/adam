@@ -15,10 +15,17 @@ def queue_output(out, queue):
     out.close()
 
 class Zandronum:
-    def __init__(self, directory=None, iwad=None):
+    def __init__(self, directory=None, iwad=None, port=None):
         # Default values
         self.wads = []
         self.process = None
+
+        # Set port
+        if not port:
+            self.port = 10666
+        else:
+            self.port = port
+        self.echo("Serving Zandronum on port "+str(self.port))
 
         # Set the directory
         if not directory:
@@ -78,6 +85,9 @@ class Zandronum:
 
         args.append("-exec")
         args.append(self.config.load())
+
+        args.append("-port")
+        args.append(str(self.port))
 
         args.append("-iwad")
         args.append(self.iwad)
