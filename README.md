@@ -26,6 +26,7 @@ To run Adam, execute `main.py` with the following parameters:
 -w wads [wads ...], --wads wads [wads ...]: WADs to load by default
 -d directory, --directory directory: Path to directory containing Zandronum and its files
 -i iwad, --iwad iwad: IWAD to load
+-p port, --port port: Zandronum server port
 ```
 
 Example:
