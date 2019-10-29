@@ -24,14 +24,14 @@ To run Adam, execute `main.py` with the following parameters:
 -m, --modrole: Discord moderator role ID; allows admin privileges for Zandronum
 -t, --token: Discord bot token
 -w wads [wads ...], --wads wads [wads ...]: WADs to load by default
+-d directory, --directory directory: Path to directory containing Zandronum and its files
+-i iwad, --iwad iwad: IWAD to load
 ```
 
 Example:
 `$ ./main.py -c 012345678901234567 -m 012345678901234567 -t 0123456789abcdefghijklmno.012345.0123456789abcdefghijklmnopqr -w udmx.wad MetroidDreadnought-v1.1.pk3`
 
 Parameters are meant to be specified per-server, as it currently only allows for one output channel at a time. Additionally, you'll need to make a Discord bot, and use its token for the `-t` parameter.
-
-Zandronum and all of its files (including optional WADs) must be in a subfolder named `zandronum/` in the same directory as `main.py`.
 
 ## To-do
 - Add `.conf` files
