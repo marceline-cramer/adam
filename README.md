@@ -3,7 +3,7 @@ Adam is a Discord bot that can host Zandronum sessions and echo game events to a
 
 Adam was originally named after Commander Adam Malkovich from the Metroid series, and was created to serve as a Discord frontend for Zandronum on the Metroid Dreadnought server.
 
-If you'd like to contact me about the bot, send me a friend request `@straw_man (CrazyWazy)#5915`, or join the Metroid Dreadnought server (https://discord.gg/KHaGJe3), where I'm active.
+If you'd like to contact me about the bot, send me a friend request `@CrazyWazy#5915`, or join the Metroid Dreadnought server (https://discord.gg/KHaGJe3), where I'm active.
 
 ## Features
 
